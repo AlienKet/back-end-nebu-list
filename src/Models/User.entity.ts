@@ -1,6 +1,11 @@
 
 //entidad de la tabla de usuarios
 //una entidad es una clase que representa una tabla en la base de datos, y cada propiedad de la clase representa una columna en la tabla
+//     npm run start:dev
+//     http://localhost:3000/api
+
+//primero hay que registrar
+//despues copiar token
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { Category } from './Category.entity';

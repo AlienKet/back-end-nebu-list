@@ -12,12 +12,17 @@ import{Controller, Post,Get,Body, UseGuards, Request} from '@nestjs/common';
 //UseGuards define que la función está protegida por un guard, en este caso el JwtAuthGuard
 //Request define que el parámetro de la función se obtiene de la petición
 
+import { ApiTags ,ApiBearerAuth } from '@nestjs/swagger';
+//ApiTags es para agrupar los endpoints en el Swagger UI bajo un mismo nombre
+
 import {AccountsService}from './Accounts.services';
 import {RegisterDto, LoginDto} from '../DTOs/Auth/Auth.dto';
 //aqui se importan los DTOs que se utilizan para definir la estructura de los datos que se reciben y se envían en las peticiones HTTP
 
 import {JwtAuthGuard} from '../Context/jwt-auth.guard';
 
+@ApiBearerAuth()
+@ApiTags('Accounts')//esto agrupa los endpoints bajo el nombre "Accounts" en el Swagger UI
 @Controller('api/accounts')//define la ruta base para las funciones de este controlador, en este caso /api/cuentas
 
 export class AccountsController {

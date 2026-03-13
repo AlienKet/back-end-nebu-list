@@ -20,6 +20,11 @@ import { CreateCategoryDto, UpdateCategoryDto } from '../DTOs/Categories/Categor
 import { JwtAuthGuard } from '../Context/jwt-auth.guard';
 // se importa el guard que verifica que el usuario tenga un token JWT valido
 
+import { ApiTags,ApiBearerAuth  } from '@nestjs/swagger';
+// ApiTags es para agrupar los endpoints bajo el nombre "Categories" en el Swagger UI
+
+@ApiBearerAuth() 
+@ApiTags('Categories')// esto agrupa los endpoints bajo el nombre "Categories" en el Swagger UI
 @Controller('api/categories')
 // define la ruta base de este controlador, todas las rutas empezaran con api/categories
 export class CategoriesController {
