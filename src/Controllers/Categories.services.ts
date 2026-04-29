@@ -28,7 +28,7 @@ export class CategoriesService {
     ) {} // constructor vacío, NestJS se encarga de inyectar las dependencias automáticamente
 
    //obtener categorias
-    async findAll(userId: string): Promise<CategoryDto[]> {
+    async findAll(userId: number): Promise<CategoryDto[]> {
     // async:es una funcion asincrona porque espera respuesta de la base de datos
     // userId:recibe el id del usuario para traer solo sus categorias
     // Promise<CategoryDto[]>: promete devolver una lista de CategoryDto cuando termine
@@ -46,7 +46,7 @@ export class CategoriesService {
     }
 
     //obtener una sola categoria─
-    async findOne(id: string, userId: string): Promise<CategoryDto> {
+    async findOne(id: number, userId: number): Promise<CategoryDto> {
     // id : identificador unico de la categoria que se busca
     // userId : verifica que la categoria pertenezca al usuario autenticado
 
@@ -68,7 +68,7 @@ export class CategoriesService {
    
     // Crear una nueva categoria
 
-    async create(createCategoryDto: CreateCategoryDto, userId: string): Promise<CategoryDto> {
+    async create(createCategoryDto: CreateCategoryDto, userId: number): Promise<CategoryDto> {
     // createCategoryDto : contiene los datos enviados por el usuario para crear la categoria
     // userId : id del usuario autenticado que esta creando la categoria
 
@@ -100,7 +100,7 @@ export class CategoriesService {
     }
 
         //actualizar categoria
-    async update(id: string, updateCategoryDto: UpdateCategoryDto, userId: string): Promise<CategoryDto> {
+    async update(id: number, updateCategoryDto: UpdateCategoryDto, userId: number): Promise<CategoryDto> {
     // id : id de la categoria que se va a actualizar
     // updateCategoryDto : contiene los nuevos datos enviados por el usuario
     // userId : verifica que la categoria pertenezca al usuario autenticado
@@ -141,7 +141,7 @@ export class CategoriesService {
     }
 
         //eliminar categoria
-    async remove(id: string, userId: string): Promise<void> {
+    async remove(id: number, userId: number): Promise<void> {
     // Promise<void> : esta función no devuelve ningiun dato al terminar
 
         const category = await this.categoryRepository.findOne({

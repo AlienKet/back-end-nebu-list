@@ -112,7 +112,7 @@ export class AccountsService {
 
         //renovar token
 
-        async renovarToken(userId: string): Promise<AuthResponseDto>{//aqui es para renovar el token, se le pasa el id del usuario para generar un nuevo token con los datos actuales del usuario
+        async renovarToken(userId: number): Promise<AuthResponseDto>{//aqui es para renovar el token, se le pasa el id del usuario para generar un nuevo token con los datos actuales del usuario
 
             const usuario = await this.userRepository.findOne({//aqui es para buscar un usuario por su id en la base de datos
                 //findOne es para buscar un solo usuario, si se encuentra devuelve el usuario, si no se encuentra devuelve null

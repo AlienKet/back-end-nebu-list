@@ -1,11 +1,16 @@
 
 // estta clase recibe las peticiones HTTP que llegan a las rutas de tareas
 
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Request, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Request, Query, ParseIntPipe} from '@nestjs/common';
 // Controller marca esta clase como un controlador que maneja rutas HTTP
 // Param extrae los parametros que vienen en la URL como el :id
 // Request accede al objeto de la peticion para obtener datos del usuario autenticado
 // Query extrae los parametros que vienen en la URL después del ? por ejemplo ?status=pending
+
+import { ApiTags, ApiBearerAuth, ApiOperation,ApiQuery} from '@nestjs/swagger';
+// ApiTags crea una sección en la documentación de Swagger para agrupar las rutas relacionadas con tareas
+// ApiBearerAuth indica que estas rutas requieren autenticación con token JWT
+// ApiOperation agrega una descripción a cada operación en la documentación de Swagger
 
 import { TasksService } from './Tasks.services';
 // se importa el service que contiene toda la logica de negocio de tareas
@@ -19,6 +24,8 @@ import { JwtAuthGuard } from '../Context/jwt-auth.guard';
 import { TaskStatus } from '../Models/Task.entity';
 // se importa el enum TaskStatus para usarlo en el filtro por status
 
+@ApiTags('Tasks') // <-- Esto crea la sección "Tasks" en Swagger
+@ApiBearerAuth()
 @Controller('api/tasks')
 // define la ruta base de este controlador, todas las rutas empezarán con api/tasks
 export class TasksController {
@@ -30,9 +37,11 @@ export class TasksController {
 
     @UseGuards(JwtAuthGuard)
     // verifica que el usuario tenga un token JWT válido antes de ejecutar la función
-    @Get()
+   @ApiQuery({ name: 'status', required: false, enum: TaskStatus }) //esto documenta el filtro por status en Swagger, indicando que es opcional y que solo acepta los valores del enum TaskStatus
+@ApiQuery({ name: 'categoryId', required: false, type: Number }) // esto documenta el filtro por categoryId en Swagger, indicando que es opcional y que debe ser un número
+@Get()
     // responde a peticiones GET en api/tasks
-    async getTasks(@Request() req, @Query('status') status?: TaskStatus, @Query('categoryId') categoryId?: string) {
+    async getTasks(@Request() req, @Query('status') status?: TaskStatus, @Query('categoryId') categoryId?: number) {
     // @Request() req contiene la informacion del usuario autenticado del token
     // @Query('status') extrae el parametro status de la URL
 
@@ -58,7 +67,7 @@ export class TasksController {
     @UseGuards(JwtAuthGuard)
     @Get(':id')
     // responde a GET en api/tasks/:id, el :id es un parametro variable en la URL
-    async getTask(@Param('id') id: string, @Request() req) {
+    async getTask(@Param('id') id: number, @Request() req) {
     // @Param('id') extrae el valor del :id que viene en la URL
 
         const userId = req.user.id;
@@ -81,7 +90,7 @@ export class TasksController {
     @Put(':id')
     // responde a peticiones PUT en api/tasks/:id
     async updateTask(
-        @Param('id') id: string,
+        @Param('id') id: number,
         // id de la tarea a actualizar que viene en la URL
         @Body() updateTaskDto: UpdateTaskDto,
         // nuevos datos de la tarea que vienen en el cuerpo de la petición
@@ -96,7 +105,7 @@ export class TasksController {
     @UseGuards(JwtAuthGuard)
     @Delete(':id')
     // responde a peticiones DELETE en api/tasks/:id
-    async deleteTask(@Param('id') id: string, @Request() req) {
+    async deleteTask(@Param('id') id: number, @Request() req) {
 
         const userId = req.user.id;
         await this.tasksService.remove(id, userId);

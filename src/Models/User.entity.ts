@@ -1,41 +1,30 @@
-
-//entidad de la tabla de usuarios
-//una entidad es una clase que representa una tabla en la base de datos, y cada propiedad de la clase representa una columna en la tabla
-//     npm run start:dev
-//     http://localhost:3000/api
-
-//primero hay que registrar
-//despues copiar token
-
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { Category } from './Category.entity';
 import { Task } from './Task.entity';
 
 @Entity('Users')
 export class User {
-
-    @PrimaryGeneratedColumn('uuid')
-    id: string;                   
+    @PrimaryGeneratedColumn()//esto es para definir la columna de id
+    id!: number;                   
 
     @Column({ length: 50 })
-    username: string;             
+    username!: string;             
 
     @Column({ length: 100, unique: true })
-    email: string;                
+    email!: string;                
 
     @Column({ type: 'text' })
-    passwordHash: string;          
+    passwordHash!: string;          
 
     @CreateDateColumn()
-    createdAt: Date;              
+    createdAt!: Date;              
 
     @Column({ default: true })
-    isActive: boolean;           
+    isActive!: boolean;           
 
-    // Relaciones
     @OneToMany(() => Category, category => category.user)
-    categories: Category[];
+    categories!: Category[];
 
     @OneToMany(() => Task, task => task.user)
-    tasks: Task[];
+    tasks!: Task[];
 }

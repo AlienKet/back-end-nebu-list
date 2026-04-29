@@ -23,6 +23,8 @@ import { CategoriesController } from './Controllers/Categories.controller';
 // Servicios
 import { AccountsService } from './Controllers/Accounts.services';
 import { CategoriesService } from './Controllers/Categories.services';
+import { TasksController } from './Controllers/Tasks.controller';
+import { TasksService } from './Controllers/Tasks.services';
 
 @Module({
   imports: [
@@ -34,8 +36,8 @@ import { CategoriesService } from './Controllers/Categories.services';
       username: 'Alien',
       password: 'alien',
       database: 'NebuList',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      // detecta automaticamente todas las entidades del proyecto
+      entities: [User, Category, Task], // registra las entidades para que TypeORM las reconozca
+
       synchronize: true,
       // crea o actualiza las tablas automaticamente segun las entidades
       
@@ -58,6 +60,7 @@ import { CategoriesService } from './Controllers/Categories.services';
     AppController,
     AccountsController,   // controlador de registro y login
     CategoriesController, // controlador de categorias
+    TasksController,      // controlador de tareas
   ],
 
   providers: [
@@ -65,6 +68,7 @@ import { CategoriesService } from './Controllers/Categories.services';
     AccountsService,   // servicio de registro y login
     CategoriesService, // servicio de categorias
     JwtStrategy,      // estrategia para verificar tokens JWT
+    TasksService,      // servicio de tareas
   ],
 })
 export class AppModule {}

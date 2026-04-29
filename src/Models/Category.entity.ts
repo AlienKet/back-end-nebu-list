@@ -13,37 +13,37 @@ export class Category {//esto es para exportar la clase de la entidad
 
     //el @ es para declarar los atributos de la clase
 
-@PrimaryGeneratedColumn('uuid')//esto es para definir la columna de id
-id: string;   //uuid es un tipo de dato que se utiliza para generar identificadores únicos, es una cadena de texto que se genera de forma aleatoria y tiene una longitud de 36 caracteres
+@PrimaryGeneratedColumn()//esto es para definir la columna de id
+id!: number;   
 
 @Column({length: 80})//esto es para definir la columna de nombre
-name: string;
+name!: string;
 
-@Column({length: 255,nullable: true})//esto es para definir la columna de descripción
-description: string;
+@Column({ type: 'varchar', length: 255, nullable: true })
+    description!: string | null;
 
-@Column({length: 8,nullable:true})//esto es para definir la columna de color,
-color: string;
+    @Column({ type: 'varchar', length: 8, nullable: true })
+    color!: string | null;
 
-@Column({length: 10, nullable: true})//esto es para definir la columna de icono, nullable es para permitir que esta columna sea nula
-icon: string;
+    @Column({ type: 'varchar', length: 10, nullable: true })
+    icon!: string | null;
 
 @CreateDateColumn()//esto es para definir la columna de fecha de creación   
-createdAt: Date;
+createdAt!: Date;
 
 //relacion con user (quien creo la categoria)
 
 @Column({ })//aqui se define la columna de userId, que es la clave foranea que se utiliza para relacionar la tabla de categorias con la tabla de usuarios
-    userId: string;
+    userId!: number;
 
     @ManyToOne(() => User, user => user.categories)//aqui es muchos a uno, es decir, muchas categorias pueden ser creadas por un mismo usuario
     //User es la entidad a la que se va a relacionar, user es el alias de la entidad, categories es el nombre de la propiedad que se va a utilizar para acceder a las categorias desde el usuario
     @JoinColumn({ name: 'userId' })//esto es para definir la columna que se usara para relacionar las tablas
-    user: User;
+    user!: User;
 
     //relacion con task
 
     @OneToMany(() => Task, task => task.category)//aqui es uno a muchos, es decir, una categoria puede tener muchas tareas
-    tasks: Task[];
+    tasks!: Task[];
 
 }

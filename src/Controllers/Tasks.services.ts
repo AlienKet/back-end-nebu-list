@@ -35,7 +35,7 @@ export class TasksService {
         // categoryRepository es para verificar que la categoria exista antes de asignarla a una tarea
     ) {}
 
-    async findAll(userId: string): Promise<TaskDto[]> {
+    async findAll(userId: number): Promise<TaskDto[]> {
     // async porque espera respuesta de la base de datos
     // userId recibe el id del usuario para traer solo sus tareas
     // Promise<TaskDto[]> promete devolver una lista de TaskDto cuando termine
@@ -52,7 +52,7 @@ export class TasksService {
         // map() recorre cada tarea y la convierte a TaskDto usando el metodo toDto
     }
 
-    async findOne(id: string, userId: string): Promise<TaskDto> {
+    async findOne(id: number, userId: number): Promise<TaskDto> {
     // id es el identificador único de la tarea que se busca
     // userId verifica que la tarea pertenezca al usuario autenticado
 
@@ -72,7 +72,7 @@ export class TasksService {
         // convierte el objeto Task a TaskDto y lo devuelve
     }
 
-    async findByStatus(userId: string, status: TaskStatus): Promise<TaskDto[]> {
+    async findByStatus(userId: number, status: TaskStatus): Promise<TaskDto[]> {
     // este metodo permite filtrar las tareas por su estado
     // por ejemplo, traer solo las tareas pendientes o completadas
 
@@ -85,7 +85,7 @@ export class TasksService {
         return tasks.map(task => this.toDto(task));
     }
 
-    async findByCategory(userId: string, categoryId: string): Promise<TaskDto[]> {
+    async findByCategory(userId: number, categoryId: number): Promise<TaskDto[]> {
     // este metodo permite traer todas las tareas que pertenecen a una categoria especifica
 
         const tasks = await this.taskRepository.find({
@@ -97,7 +97,7 @@ export class TasksService {
         return tasks.map(task => this.toDto(task));
     }
 
-    async create(createTaskDto: CreateTaskDto, userId: string): Promise<TaskDto> {
+    async create(createTaskDto: CreateTaskDto, userId: number): Promise<TaskDto> {
     // createTaskDto contiene los datos enviados por el usuario para crear la tarea
     // userId es el id del usuario autenticado que está creando la tarea
 
@@ -134,7 +134,7 @@ export class TasksService {
         // convierte el registro guardado a TaskDto y lo devuelve
     }
 
-    async update(id: string, updateTaskDto: UpdateTaskDto, userId: string): Promise<TaskDto> {
+    async update(id: number, updateTaskDto: UpdateTaskDto, userId: number): Promise<TaskDto> {
     // id es el id de la tarea que se va a actualizar
     // updateTaskDto contiene los nuevos datos enviados por el usuario
     // userId verifica que la tarea pertenezca al usuario autenticado
@@ -171,7 +171,7 @@ export class TasksService {
         // devuelve la tarea actualizada como TaskDto
     }
 
-    async remove(id: string, userId: string): Promise<void> {
+    async remove(id: number, userId: number): Promise<void> {
     // Promise<void> significa que esta función no devuelve ningún dato al terminar
 
         const task = await this.taskRepository.findOne({
@@ -197,14 +197,14 @@ export class TasksService {
         dto.id = task.id;
         // asigna el id de la tarea
         dto.title = task.title;
-        dto.description = task.description;
+        dto.description = task.description ?? null; // si description es undefined, asigna null para que sea más claro en la respuesta
         dto.status = task.status;
         dto.priority = task.priority;
-        dto.dueDate = task.dueDate;
+        dto.dueDate = task.dueDate ?? null;
         dto.createdAt = task.createdAt;
         dto.updatedAt = task.updatedAt;
         dto.userId = task.userId;
-        dto.categoryId = task.categoryId;
+        dto.categoryId = task.categoryId ?? null; 
         return dto;
         // devuelve el DTO listo para enviar como respuesta
     }

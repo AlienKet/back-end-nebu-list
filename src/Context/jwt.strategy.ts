@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // payload contiene lo que guardaste en construirToken() del AccountsService: sub, email, username
 
         return {
-            id: payload.sub,        // payload.sub es el userId que guardaste en el token
+            id: Number(payload.sub),        // payload.sub es el userId que se guardo en el token
             email: payload.email,
             username: payload.username,
         };

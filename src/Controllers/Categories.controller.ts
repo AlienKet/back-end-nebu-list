@@ -1,7 +1,7 @@
 
 // Esta clase recibe las peticiones HTTP que llegan a las rutas de categorias
 
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Request, ParseIntPipe } from '@nestjs/common';
 // Controller :marca esta clase como un controlador que maneja rutas HTTP
 // Get obtener datos
 // peticiones POST (crear datos)
@@ -10,7 +10,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Request } f
 // Param :extrae los parametros que vienen en la URL, como el :id
 // UseGuards :protege la ruta, solo usuarios autenticados pueden acceder
 // Request :accede al objeto de la petición HTTP para obtener datos del usuario autenticado
-
+//ParseIntPipe :convierte el parametro id de string a number automáticamente
 import { CategoriesService } from './Categories.services';
 // se importa el service que contiene toda la logica de negocio
 
@@ -56,8 +56,8 @@ export class CategoriesController {
  
     @UseGuards(JwtAuthGuard) // ruta protegida, requiere token JWT valido
     @Get(':id') // responde a GET en api/categories/:id, el :id es un parametro variable
-    async getCategory(@Param('id') id: string, @Request() req) {
-    // @Param('id') id :extrae el valor del :id que viene en la URL
+    async getCategory(@Param('id', ParseIntPipe) id: number, @Request() req) {
+    // @Param('id', ParseIntPipe) id: number :extrae el id de la URL y lo convierte a number automáticamente
 
         const userId = req.user.id; // id del usuario autenticado del token
         return this.categoriesService.findOne(id, userId);
@@ -84,7 +84,7 @@ export class CategoriesController {
     @UseGuards(JwtAuthGuard) // ruta protegida, requiere token JWT valido
     @Put(':id') // responde a peticiones PUT en api/categories/:id
     async updateCategory(
-        @Param('id') id: string,                        // id de la categoria a actualizar desde la URL
+        @Param('id') id: number,                        // id de la categoria a actualizar desde la URL
         @Body() updateCategoryDto: UpdateCategoryDto,   // nuevos datos desde el cuerpo de la petición
         @Request() req                                  // petición HTTP para obtener el usuario
     ) {
@@ -99,7 +99,7 @@ export class CategoriesController {
    
     @UseGuards(JwtAuthGuard) // ruta protegida, requiere token JWT valido
     @Delete(':id') // responde a peticiones DELETE en api/categories/:id
-    async deleteCategory(@Param('id') id: string, @Request() req) {
+    async deleteCategory(@Param('id') id: number, @Request() req) {
 
         const userId = req.user.id; // id del usuario autenticado del token
         await this.categoriesService.remove(id, userId);

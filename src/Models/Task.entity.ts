@@ -20,43 +20,43 @@ export enum TaskPriority {
 @Entity('Tasks')//esto es para definir la entidad(nombre de la tabla)
 export class Task {
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string;                       
+    @PrimaryGeneratedColumn()
+    id!: number;                       
 
     @Column({ length: 150 })
-    title: string;                     
+    title!: string;                     
 
     @Column({ type: 'text', nullable: true })
-    description: string;               
+    description?: string;               
 
     @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.PENDING })
-    status: TaskStatus;                
+    status!: TaskStatus;                
 
     @Column({ type: 'enum', enum: TaskPriority, default: TaskPriority.MEDIUM })
-    priority: TaskPriority;           
+    priority!: TaskPriority;           
 
     @Column({ type: 'date', nullable: true })
-    dueDate: Date;    //dueDate es la fecha de vencimiento de la tarea                 
+    dueDate!: Date;    //dueDate es la fecha de vencimiento de la tarea                 
 
     @CreateDateColumn()
-    createdAt: Date;                  
+    createdAt!: Date;                  
 
     @UpdateDateColumn()
-    updatedAt: Date;                 
+    updatedAt!: Date;                 
 
     // Relaciones
     @Column({ })//la tarea es creada por un usuario
-    userId: string;
+    userId!: number;
 
 @ManyToOne(() => User, user => user.tasks) //aqui es muchos a uno, es decir, muchas tareas pueden ser creadas por un mismo usuario
 @JoinColumn({ name: 'userId' })//esto es para definir la columna que se usara para relacionar las tablas
-user: User;
+user!: User;
 
 @Column({ nullable: true })
-categoryId: string;    //porque una tarea puede no tener categoría
+categoryId!: number;    //porque una tarea puede no tener categoría
 
 @ManyToOne(() => Category, category => category.tasks)//aqui es muchos a uno, es decir, muchas tareas pueden pertenecer a una misma categoría
 @JoinColumn({ name: 'categoryId' })//esto es para definir la columna que se usara para relacionar las tablas
-category: Category;
+category!: Category;
 
 }
