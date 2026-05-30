@@ -7,7 +7,7 @@
 //  npm install @nestjs/passport @nestjs/jwt passport passport-jwt
 //  npm install --save-dev @types/passport-jwt
 
-// passport es la libreria de autenticacion 
+
 
 
 import {Injectable} from '@nestjs/common';//Injectables es para que la clase se pueda usar en otros archivos

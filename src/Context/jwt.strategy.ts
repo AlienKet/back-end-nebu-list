@@ -1,6 +1,6 @@
 
 // Esta clase le dice a Passport como verificar y decodificar el token JWT
-
+// passport es la libreria de autenticacion 
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 // PassportStrategy: clase base para crear estrategias de autenticacion en NestJS
