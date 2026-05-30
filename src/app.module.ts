@@ -31,11 +31,11 @@ import { TasksService } from './Controllers/Tasks.services';
     // Conexión a PostgreSQL
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'dpg-d8d4lu77f7vs73bpsa7g-a',
       port: 5432,
-      username: 'Alien',
-      password: 'alien',
-      database: 'NebuList',
+      username: 'nebulist_user',
+      password: 'wi6MEwh1kNqv6mtOc0RWsgxb5t4gnr6E',
+      database: 'nebulist',
       entities: [User, Category, Task], // registra las entidades para que TypeORM las reconozca
 
       synchronize: true,
