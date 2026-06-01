@@ -23,7 +23,7 @@ import {JwtAuthGuard} from '../Context/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('Accounts')//esto agrupa los endpoints bajo el nombre "Accounts" en el Swagger UI
-@Controller('api/accounts')//define la ruta base para las funciones de este controlador, en este caso /api/cuentas
+@Controller('api/auth')//define la ruta base para las funciones de este controlador
 
 export class AccountsController {
     constructor ( 
