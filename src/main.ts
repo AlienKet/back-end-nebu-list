@@ -3,13 +3,15 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 //npm run start:dev
-//http://localhost:3000/api
+//http://localhost:3000/api  back
+//https://nebulistfront.onrender.com front
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // habilita CORS para que Angular pueda comunicarse con el backend
    app.enableCors({
-    origin: 'http://localhost:4200', // puerto donde corre Angular
+    origin: 'https://nebulistfront.onrender.com', // puerto donde corre Angular
     methods: 'GET,POST,PUT,DELETE,OPTIONS',  // agrega OPTIONS para peticiones preflight
     allowedHeaders: 'Content-Type, Authorization',
   });
