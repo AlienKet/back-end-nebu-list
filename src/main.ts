@@ -2,9 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
-//npm run start:dev
-//http://localhost:3000/api  back
-//https://nebulistfront.onrender.com front
+//esta clase es el punto de entrada de la aplicación
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

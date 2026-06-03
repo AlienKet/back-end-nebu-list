@@ -1,4 +1,5 @@
 //este es la entidad para la tabla de tareas
+//una entidad es una clase que representa una tabla en la base de datos
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './User.entity';
